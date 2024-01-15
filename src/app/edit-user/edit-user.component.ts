@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../_models/user';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-user',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.scss'
 })
