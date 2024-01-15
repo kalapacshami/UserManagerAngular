@@ -1,13 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { User } from '../_models/user';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-list-users',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,RouterModule],
   templateUrl: './list-users.component.html',
   styleUrl: './list-users.component.scss'
 })
@@ -20,6 +21,17 @@ export class ListUsersComponent {
     this.http= http
     this.users = []
     this.getAllUsers()
+  }
+
+  public deleteUser(user:User){
+    this.http.delete('https://dummyjson.com/users/' + user.id).subscribe((success) => {
+    console.log(success)
+    let i= this.users.findIndex(x=> x.id === user.id)
+    this.users.splice(i,1)
+    }, (error) =>{
+      console.log(error)
+    })
+    
   }
 
   public formatPhoneNumber(number:string) : string{
