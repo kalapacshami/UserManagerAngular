@@ -13,17 +13,21 @@ import { FormsModule } from '@angular/forms';
 })
 export class EditUserComponent implements OnInit {
 
+  editIsDisabled : boolean
   userId: any
   user:User
   route: ActivatedRoute
   http: HttpClient
 
   constructor(route:ActivatedRoute, http:HttpClient){
+    this.editIsDisabled= true
     this.userId = ''
     this.user=new User()
     this.route = route
     this.http = http
   }
+
+
   ngOnInit(): void {
     this.route.params.subscribe(param => {
       this.http.get<User>('https://dummyjson.com/users/'+param['id']).subscribe(resp =>{
@@ -47,5 +51,13 @@ export class EditUserComponent implements OnInit {
     })
   }
 
+  public updateUser(){
+    this.http.put('https://dummyjson.com/users/' + this.user.id, this.user)
+    .subscribe(
+      (success) => console.log(success),
+      (error) => console.log(error)
 
+    )
+
+  }
 }
